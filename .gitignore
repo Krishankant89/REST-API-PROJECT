@@ -1,0 +1,27 @@
+# === Python ===
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.venv/
+venv/
+ENV/
+env/
+
+# === Environment & Secrets ===
+.env
+*.env
+*.secret
+
+# === Terraform ===
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+*.tfvars
+*.tfvars.json
+
+# === Operating System Files ===
+.DS_Store
+Thumbs.db

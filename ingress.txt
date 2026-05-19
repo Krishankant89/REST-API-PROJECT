@@ -1,0 +1,32 @@
+Issue summary
+-------------
+Ingress was not reachable from the browser even though the nginx ingress addon was enabled and the app itself was healthy.
+
+Steps taken and findings
+------------------------
+1) Read k8s/ingress.yml and found the rule required host "fastapi.local".
+2) Verified ingress/controller were running:
+   - kubectl get ingress -A
+   - kubectl get svc -n ingress-nginx
+3) Tried to access the ingress from the host via:
+   - http://<minikube-ip>/ and http://<minikube-ip>:<ingress-nodeport>/ (both timed out)
+4) Verified the backend service was healthy from inside the cluster:
+   - kubectl run tmp-curl --rm -i --restart=Never --image=curlimages/curl -- curl -sS -o /dev/null -w "%{http_code}\n" http://fastapi-service:8000/
+   - Result: HTTP 200
+5) Confirmed Minikube uses the Docker driver, which does not expose the Minikube node IP directly to the host.
+
+Root causes
+-----------
+1) Host-based routing: without a local DNS/hosts entry for fastapi.local, browser requests never matched the ingress rule.
+2) Docker driver networking: direct access to 192.168.58.2 (node IP) is not reachable from the host.
+
+Fix applied
+-----------
+1) Updated k8s/ingress.yml to remove the host requirement so it matches any host.
+2) Accessed the ingress using the supported path for Docker driver:
+   - minikube service -n ingress-nginx ingress-nginx-controller --url
+   - or port-forward: kubectl port-forward -n ingress-nginx svc/ingress-nginx-controller 8080:80
+
+Result
+------
+Ingress now serves the FastAPI service in the browser using the URL returned by minikube service or via localhost:8080 with port-forwarding.
