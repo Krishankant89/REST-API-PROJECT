@@ -460,7 +460,7 @@ This project demonstrates hands-on proficiency with:
 ## Author
 
 **Your Name**  
-[GitHub](https://github.com/yourusername) · [LinkedIn](https://linkedin.com/in/yourprofile)
+[GitHub](https://github.com/Krishankant89) · [LinkedIn](https://www.linkedin.com/in/krishankant-shastri-9762b7348)
 
 ---
 
@@ -469,5 +469,3 @@ This project demonstrates hands-on proficiency with:
 This project is licensed under the [MIT License](LICENSE).
 
 ---
-
-<p align="center">Built with precision. Deployed with confidence.</p>
